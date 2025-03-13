@@ -10,15 +10,13 @@ import random
 import torch
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
 
-# Setup device
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# Load model and tokenizer
 tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
 model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn").to(device)
 summarizer = pipeline("summarization", model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
 
-# Configure Chrome options
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
